@@ -23,8 +23,11 @@
             <param name="levelMax" value="error" />
             <param name="AcceptOnMatch" value="true" />       
         </filter>       
-    </appender>       
-    
+    </appender>
+
+    <logger name="com.yjx.template.dao">
+        <level value="DEBUG" />
+    </logger>
 
     <!-- 根logger的设置-->       
     <root>       
