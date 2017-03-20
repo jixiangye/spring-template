@@ -30,4 +30,6 @@
     <mvc:view-resolvers>
         <mvc:jsp />
     </mvc:view-resolvers>
+
+    <bean class="com.yjx.template.base.BizExceptionResolver"/>
 </beans>

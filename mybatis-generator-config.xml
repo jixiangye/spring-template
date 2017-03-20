@@ -15,9 +15,9 @@
 
         <!-- !!!! Database Configurations !!!! -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://10.199.132.232:3306/uc_new?characterEncoding=UTF8"
+                        connectionURL="jdbc:mysql://localhost:3306/test?characterEncoding=UTF8"
                         userId="root"
-                        password="servyou1234"/>
+                        password=""/>
 
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
@@ -40,7 +40,7 @@
         </javaClientGenerator>
 
         <!-- !!!! Table Configurations !!!! -->
-        <table tableName="APP_AUTH" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
-               enableUpdateByExample="false" domainObjectName="AppAuth"/>
+        <table tableName="user" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+               enableUpdateByExample="false" domainObjectName="User"/>
     </context>
 </generatorConfiguration>
