@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
-        <property name="securityManager" ref="securityManager" />
+        <property name="securityManager" ref="securityManager"/>
         <!-- 可根据项目的URL进行替换 -->
-        <property name="loginUrl" value="/login" />
-        <property name="successUrl" value="/index" />
-        <property name="unauthorizedUrl" value="/unauthorized" />
+        <property name="loginUrl" value="/login"/>
+        <property name="successUrl" value="/index"/>
+        <property name="unauthorizedUrl" value="/unauthorized"/>
+        <property name="filters">
+            <util:map>
+                <entry key="authc" value-ref="formAuthenticationFilter"/>
+            </util:map>
+        </property>
         <property name="filterChainDefinitions">
             <value>
                 /css/** = anon
@@ -21,21 +26,27 @@
 
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <!-- 单realm应用。如果需要配置多个realm，使用“realms”属性 -->
-        <property name="realm" ref="myRealm" />
+        <property name="realm" ref="myRealm"/>
         <!-- 默认使用servlet容器session。下面是使用shiro 原生session的例子(细节请参考帮助文档) -->
         <!-- <property name="sessionMode" value="native"/> -->
     </bean>
-    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
     <!-- 定义连接后台安全数据源的realm -->
     <bean id="myRealm" class="com.yjx.template.base.MyRealm">
-        <property name="credentialsMatcher" ref="credentialsMatcher" />
-        <property name="userMapper" ref="userMapper" />
+        <property name="credentialsMatcher" ref="credentialsMatcher"/>
     </bean>
 
     <bean id="credentialsMatcher"
           class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
-        <property name="hashAlgorithmName" value="SHA-1" />
-        <property name="hashSalted" value="true" />
-        <property name="hashIterations" value="3" />
+        <property name="hashAlgorithmName" value="SHA-1"/>
+        <property name="hashSalted" value="true"/>
+        <property name="hashIterations" value="3"/>
+    </bean>
+
+    <bean id="formAuthenticationFilter" class="com.yjx.template.base.ExtendFormAuthenticationFilter"></bean>
+
+    <!-- 开启shiro注解支持 -->
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
     </bean>
 </beans>

@@ -2,15 +2,17 @@
 <html>
 <head>
     <title>登录</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no"/>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <script src="js/jquery-1.12.3.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <style>
-        #login-form{
-            margin-top:20px;
+        #login-form {
+            margin-top: 20px;
         }
-        #errorMsg{
+
+        #errorMsg {
             color: red;
             display: none;
         }
@@ -37,17 +39,18 @@
     </form>
 </div>
 <script>
-    $("#submit").click(function(){
+    $("#submit").click(function () {
         var username = $("input[name='username']").val();
         var password = $("input[name='password']").val();
         $.ajax({
-            url:"login",
-            type:"post",
-            data:{username:username,password:password},
-            success:function(res){
-                if(res.success){
-                    location.href="index";
-                }else{
+            url: "login",
+            type: "post",
+            dataType: "json",
+            data: {username: username, password: password},
+            success: function (res) {
+                if (res.success) {
+                    location.href = "index";
+                } else {
                     $("#errorMsg").text(res.errorMsg).show();
                 }
             }

@@ -7,11 +7,13 @@ public class BizException extends RuntimeException{
 
     public BizException(String message, String code) {
         super(message);
+        this.message = message;
         this.code = code;
     }
 
     public BizException(String message) {
         super(message);
+        this.message = message;
     }
 
     public String getCode() {
