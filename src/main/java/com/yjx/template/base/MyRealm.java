@@ -37,7 +37,4 @@ public class MyRealm extends AuthorizingRealm {
         return new SimpleAuthenticationInfo(username, user.getPassword(), ByteSource.Util.bytes(user.getSalt()), getName());
     }
 
-    public void setUserMapper(UserMapper userMapper) {
-        this.userMapper = userMapper;
-    }
 }

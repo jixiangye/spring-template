@@ -42,6 +42,14 @@
     $("#submit").click(function () {
         var username = $("input[name='username']").val();
         var password = $("input[name='password']").val();
+        if(!username){
+            $("#errorMsg").text("用户名不能为空").show();
+            return false;
+        }
+        if(!password){
+            $("#errorMsg").text("密码不能为空").show();
+            return false;
+        }
         $.ajax({
             url: "login",
             type: "post",
