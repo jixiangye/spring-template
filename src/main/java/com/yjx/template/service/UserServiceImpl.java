@@ -62,4 +62,8 @@ public class UserServiceImpl implements UserService {
         }
         return Hex.encodeToString(hashed);
     }
+
+    public User getByUsername(String username) {
+        return userMapper.getByUsername(username);
+    }
 }

@@ -10,6 +10,10 @@
         #login-form{
             margin-top:20px;
         }
+        #errorMsg{
+            color: red;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -22,12 +26,33 @@
             <input type="password" class="form-control" id="password" placeholder="密码" name="password">
         </div>
         <div class="form-group">
-            <button type="submit" class="btn btn-primary form-control">登录</button>
+            <button id="submit" type="button" class="btn btn-primary form-control">登录</button>
         </div>
         <div class="form-group">
             <a href="register">注册</a>
         </div>
+        <div class="form-group">
+            <span id="errorMsg"></span>
+        </div>
     </form>
 </div>
+<script>
+    $("#submit").click(function(){
+        var username = $("input[name='username']").val();
+        var password = $("input[name='password']").val();
+        $.ajax({
+            url:"login",
+            type:"post",
+            data:{username:username,password:password},
+            success:function(res){
+                if(res.success){
+                    location.href="index";
+                }else{
+                    $("#errorMsg").text(res.errorMsg).show();
+                }
+            }
+        });
+    });
+</script>
 </body>
 </html>

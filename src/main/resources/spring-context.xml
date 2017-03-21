@@ -12,4 +12,5 @@
     <context:property-placeholder location="classpath:spring.properties"/>
 
     <import resource="spring-jdbc.xml"/>
+    <import resource="spring-shiro.xml"/>
 </beans>
