@@ -18,6 +18,7 @@
                 /css/** = anon
                 /js/** = anon
                 /register = anon
+                /forget = anon
                 /logout = logout
                 /** = authc
             </value>

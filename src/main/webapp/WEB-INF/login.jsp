@@ -32,6 +32,7 @@
         </div>
         <div class="form-group">
             <a href="register">注册</a>
+            <a href="forget">找回密码</a>
         </div>
         <div class="form-group">
             <span id="errorMsg"></span>

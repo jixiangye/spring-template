@@ -22,21 +22,19 @@
 <div class="container-fluid">
     <form method="post" action="register" id="register-form">
         <div class="form-group">
-            <input type="text" class="form-control" id="username" placeholder="用户名" name="username" required="required">
+            <input type="text" class="form-control" id="username" placeholder="用户名" name="username">
         </div>
         <div class="form-group">
-            <input type="email" class="form-control" id="email" placeholder="邮箱" name="email" required="required">
+            <input type="email" class="form-control" id="email" placeholder="邮箱" name="email">
         </div>
         <div class="form-group">
             <input type="tel" class="form-control" id="mobile" placeholder="手机号" name="mobile">
         </div>
         <div class="form-group">
-            <input type="password" class="form-control" id="password" placeholder="密码" name="password"
-                   required="required">
+            <input type="password" class="form-control" id="password" placeholder="密码" name="password">
         </div>
         <div class="form-group">
-            <input type="password" class="form-control" id="repassword" placeholder="确认密码" name="repassword"
-                   required="required">
+            <input type="password" class="form-control" id="repassword" placeholder="确认密码" name="repassword">
         </div>
         <div class="form-group">
             <button type="button" id="submit" class="btn btn-primary form-control">提交注册</button>

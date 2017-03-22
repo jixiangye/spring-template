@@ -27,10 +27,11 @@ public class ExtendFormAuthenticationFilter extends FormAuthenticationFilter {
 
     @Override
     protected boolean onLoginSuccess(AuthenticationToken token, Subject subject, ServletRequest request, ServletResponse response) throws Exception {
+        Session session = subject.getSession();
+        String username = (String) subject.getPrincipal();
+        session.setAttribute("user", userMapper.getByUsername(username));
+
         if (HttpUtil.isAjax((HttpServletRequest) request)) {
-            Session session = subject.getSession();
-            String username = (String) subject.getPrincipal();
-            session.setAttribute("user", userMapper.getByUsername(username));
             PrintWriter out = response.getWriter();
             out.println(JSON.toJSONString(new SuccessResult(null)));
             out.flush();
