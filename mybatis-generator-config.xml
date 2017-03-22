@@ -42,5 +42,17 @@
         <!-- !!!! Table Configurations !!!! -->
         <table tableName="user" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
                enableUpdateByExample="false" domainObjectName="User"/>
+
+        <table tableName="role" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+               enableUpdateByExample="false" domainObjectName="Role"/>
+
+        <table tableName="permission" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+               enableUpdateByExample="false" domainObjectName="Permission"/>
+
+        <table tableName="user_roles" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+               enableUpdateByExample="false" domainObjectName="UserRoles"/>
+
+        <table tableName="role_permissions" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+               enableUpdateByExample="false" domainObjectName="RolePermissions"/>
     </context>
 </generatorConfiguration>

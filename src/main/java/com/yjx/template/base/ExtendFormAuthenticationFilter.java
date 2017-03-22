@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 
 /**
@@ -62,12 +61,16 @@ public class ExtendFormAuthenticationFilter extends FormAuthenticationFilter {
                         "Authentication url [" + getLoginUrl() + "]");
             }
 
-//            String requestURI = ((HttpServletRequest) request).getRequestURI();
-            PrintWriter out = response.getWriter();
-            out.println(JSON.toJSONString(new FailResult("No Access","No Access")));
-            out.flush();
-            out.close();
-//            saveRequestAndRedirectToLogin(request, response);
+            String requestURI = ((HttpServletRequest) request).getRequestURI();
+            if (requestURI.endsWith(".json")) {
+                PrintWriter out = response.getWriter();
+                out.println(JSON.toJSONString(new FailResult("No Access", "No Access")));
+                out.flush();
+                out.close();
+            } else {
+                saveRequestAndRedirectToLogin(request, response);
+            }
+
             return false;
         }
     }
