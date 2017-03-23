@@ -2,6 +2,8 @@ package com.yjx.template.dao;
 
 import com.yjx.template.pojo.Role;
 
+import java.util.List;
+
 public interface RoleMapper {
     int deleteByPrimaryKey(String roleCode);
 
@@ -14,4 +16,6 @@ public interface RoleMapper {
     int updateByPrimaryKeySelective(Role record);
 
     int updateByPrimaryKey(Role record);
+
+    List<Role> listRoles();
 }

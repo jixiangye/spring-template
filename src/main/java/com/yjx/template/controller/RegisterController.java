@@ -34,6 +34,11 @@ public class RegisterController {
         if (StringUtils.isEmpty(user.getPassword())) {
             return new FailResult("密码不能为空");
         }
+
+        User existingUser = userService.getByUsername(user.getUsername());
+        if (existingUser != null) {
+            return new FailResult("该用户名已存在");
+        }
         userService.register(user);
         return new SuccessResult(null);
     }

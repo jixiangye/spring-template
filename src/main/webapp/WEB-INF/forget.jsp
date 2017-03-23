@@ -1,16 +1,23 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
 <html>
 <head>
     <title>找回密码</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!--[if lte IE 9]>
+    <script src="js/respond.min.js"></script>
+    <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
     <script src="js/jquery-1.12.3.js"></script>
+    <script src="js/jquery.placeholder.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/common.js"></script>
     <style>
-        body {
-            margin-top: 20px;
+        .page-header {
+            text-align: center;
         }
 
         #errorMsg {
@@ -24,6 +31,9 @@
     </style>
 </head>
 <body>
+<div class="page-header">
+    <h1>找回密码</h1>
+</div>
 <div class="container-fluid" id="forget-form">
     <div id="step1">
         <div class="form-group">
@@ -54,11 +64,13 @@
     </div>
 </div>
 <script>
+    $('input').placeholder();
+
     $("#next").click(function () {
         $.ajax({
             url: "forget/sendCode",
             type: "post",
-            data:{username:$("input[name='username']").val()},
+            data: {username: $("input[name='username']").val()},
             dataType: "json",
             success: function (res) {
                 if (res.success) {
@@ -78,14 +90,16 @@
             url: "resetPassword",
             type: "post",
             dataType: "json",
-            data:getInputValues($("#forget-form")),
+            data: $("#forget-form").values(),
             success: function (res) {
                 if (res.success) {
-                    $("#errorMsg").text("修改密码成功").show();
-                    setTimeout(function(){
-                        location.href = "login";
-                    },2000);
-                }else{
+                    $.alert({
+                        msg: "修改密码成功",
+                        ok: function () {
+                            location.href = "login";
+                        }
+                    });
+                } else {
                     $("#errorMsg").text(res.errorMsg).show();
                 }
             }

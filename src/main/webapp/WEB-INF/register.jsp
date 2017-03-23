@@ -1,16 +1,23 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
 <html>
 <head>
     <title>注册</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!--[if lte IE 9]>
+    <script src="js/respond.min.js"></script>
+    <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
     <script src="js/jquery-1.12.3.js"></script>
+    <script src="js/jquery.placeholder.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/common.js"></script>
     <style>
-        body {
-            margin-top: 20px;
+        .page-header {
+            text-align: center;
         }
 
         #errorMsg {
@@ -20,6 +27,9 @@
     </style>
 </head>
 <body>
+<div class="page-header">
+    <h1>注册</h1>
+</div>
 <div class="container-fluid">
     <form method="post" action="register" id="register-form">
         <div class="form-group">
@@ -46,8 +56,10 @@
     </form>
 </div>
 <script>
+    $('input').placeholder();
+
     $("#submit").click(function () {
-        var params = getInputValues($("#register-form"));
+        var params = $("#register-form").values();
         if (params.password != params.repassword) {
             $("#errorMsg").text("密码和确认密码不一致").show();
             return false
@@ -59,7 +71,12 @@
             data: params,
             success: function (res) {
                 if (res.success) {
-                    location.href = "login";
+                    $.alert({
+                        msg: "注册成功",
+                        ok: function () {
+                            location.href = "login";
+                        }
+                    });
                 } else {
                     $("#errorMsg").text(res.errorMsg).show();
                 }
