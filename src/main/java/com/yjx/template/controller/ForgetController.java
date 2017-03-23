@@ -20,9 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.UUID;
 
-/**
- * Created by yejx on 2017/3/22.
- */
 @Controller
 public class ForgetController {
     @Autowired
@@ -38,10 +35,10 @@ public class ForgetController {
     public Result sendCode(@RequestParam String username) {
         User user = userService.getByUsername(username);
         if (user == null) {
-            return new FailResult("", "该用户不存在");
+            return new FailResult("该用户不存在");
         }
         if (StringUtils.isEmpty(user.getEmail())) {
-            return new FailResult("", "该用户未绑定邮箱");
+            return new FailResult("该用户未绑定邮箱");
         }
 
         Session session = SecurityUtils.getSubject().getSession();

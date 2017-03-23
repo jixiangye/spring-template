@@ -16,9 +16,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.PrintWriter;
 
-/**
- * Created by yejx on 2017/3/21.
- */
 public class ExtendFormAuthenticationFilter extends FormAuthenticationFilter {
     private static final Logger logger = LoggerFactory.getLogger(ExtendFormAuthenticationFilter.class);
 

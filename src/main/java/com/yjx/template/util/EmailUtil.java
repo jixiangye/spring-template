@@ -7,9 +7,6 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import java.util.Properties;
 
-/**
- * Created by yejx on 2017/3/23.
- */
 public class EmailUtil {
     private static final Logger logger = LoggerFactory.getLogger(EmailUtil.class);
 
@@ -28,11 +25,11 @@ public class EmailUtil {
         mailMessage.setSubject("密码重置");
         mailMessage.setText(context);
 
-        senderImpl.setUsername("yjxdtc001@sina.com"); // 根据自己的情况,设置username
-        senderImpl.setPassword("111111111"); // 根据自己的情况, 设置password
+        senderImpl.setUsername("yjxdtc001@sina.com");
+        senderImpl.setPassword("111111111");
 
         Properties prop = new Properties();
-        prop.put("mail.smtp.auth", " true"); // 将这个参数设为true，让服务器进行认证,认证用户名和密码是否正确
+        prop.put("mail.smtp.auth", "true");
         prop.put("mail.smtp.timeout", "25000");
         senderImpl.setJavaMailProperties(prop);
         // 发送邮件

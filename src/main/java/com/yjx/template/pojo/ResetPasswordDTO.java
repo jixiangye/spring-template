@@ -2,9 +2,6 @@ package com.yjx.template.pojo;
 
 import java.io.Serializable;
 
-/**
- * Created by yejx on 2017/3/23.
- */
 public class ResetPasswordDTO implements Serializable {
     private static final long serialVersionUID = 6294767725541646884L;
 
