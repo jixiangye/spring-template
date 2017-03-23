@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <script src="js/jquery-1.12.3.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/common.js"></script>
     <style>
         body {
             margin-top: 20px;
@@ -46,12 +47,8 @@
 </div>
 <script>
     $("#submit").click(function () {
-        var username = $("input[name='username']").val();
-        var email = $("input[name='email']").val();
-        var mobile = $("input[name='mobile']").val();
-        var password = $("input[name='password']").val();
-        var repassword = $("input[name='repassword']").val();
-        if (password != repassword) {
+        var params = getInputValues($("#register-form"));
+        if (params.password != params.repassword) {
             $("#errorMsg").text("密码和确认密码不一致").show();
             return false
         }
@@ -59,7 +56,7 @@
             url: "register",
             type: "post",
             dataType: "json",
-            data: {username: username, email: email, mobile: mobile, password: password},
+            data: params,
             success: function (res) {
                 if (res.success) {
                     location.href = "login";

@@ -5,6 +5,8 @@ import com.yjx.template.dao.UserMapper;
 import com.yjx.template.pojo.User;
 import org.apache.shiro.codec.Hex;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -15,6 +17,8 @@ import java.util.Date;
 
 @Service
 public class UserServiceImpl implements UserService {
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+
     @Autowired
     private UserMapper userMapper;
 
@@ -49,7 +53,7 @@ public class UserServiceImpl implements UserService {
         try {
             digest = MessageDigest.getInstance("SHA-1");
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
 
         digest.reset();
@@ -65,5 +69,14 @@ public class UserServiceImpl implements UserService {
 
     public User getByUsername(String username) {
         return userMapper.getByUsername(username);
+    }
+
+    public void updatePassword(User user) {
+        String salt = generateSalt();
+        String password = encryptPassword(user.getPassword(), salt);
+        user.setSalt(salt);
+        user.setPassword(password);
+        user.setModifyTime(new Date());
+        userMapper.updateByUsername(user);
     }
 }

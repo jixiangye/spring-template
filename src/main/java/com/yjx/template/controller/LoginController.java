@@ -23,9 +23,9 @@ public class LoginController {
     public Result doLogin(HttpServletRequest req) {
         String failureClass = (String) req.getAttribute(FormAuthenticationFilter.DEFAULT_ERROR_KEY_ATTRIBUTE_NAME);
         if (UnknownAccountException.class.getName().equalsIgnoreCase(failureClass)) {
-            return new FailResult("", "该用户不存在");
+            return new FailResult("该用户不存在");
         } else {
-            return new FailResult("", "用户名或密码错误");
+            return new FailResult("用户名或密码错误");
         }
     }
 }

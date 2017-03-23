@@ -6,4 +6,6 @@ public interface UserService {
     int register(User user);
 
     User getByUsername(String username);
+
+    void updatePassword(User user);
 }

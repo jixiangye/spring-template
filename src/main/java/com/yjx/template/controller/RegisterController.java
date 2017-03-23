@@ -1,6 +1,6 @@
 package com.yjx.template.controller;
 
-import com.yjx.template.base.BizException;
+import com.yjx.template.base.FailResult;
 import com.yjx.template.base.Result;
 import com.yjx.template.base.SuccessResult;
 import com.yjx.template.pojo.User;
@@ -26,13 +26,13 @@ public class RegisterController {
     @ResponseBody
     public Result doRegister(User user) {
         if (StringUtils.isEmpty(user.getUsername())) {
-            throw new BizException("用户名不能为空");
+            return new FailResult("用户名不能为空");
         }
         if (StringUtils.isEmpty(user.getEmail())) {
-            throw new BizException("邮箱不能为空");
+            return new FailResult("邮箱不能为空");
         }
         if (StringUtils.isEmpty(user.getPassword())) {
-            throw new BizException("密码不能为空");
+            return new FailResult("密码不能为空");
         }
         userService.register(user);
         return new SuccessResult(null);

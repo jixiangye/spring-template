@@ -19,6 +19,8 @@
                 /js/** = anon
                 /register = anon
                 /forget = anon
+                /forget/sendCode = anon
+                /resetPassword = anon
                 /logout = logout
                 /** = authc
             </value>

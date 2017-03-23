@@ -9,6 +9,10 @@ public class FailResult implements Result{
         this.errorMsg = errorMsg;
     }
 
+    public FailResult(String errorMsg) {
+        this.errorMsg = errorMsg;
+    }
+
     public boolean isSuccess() {
         return false;
     }

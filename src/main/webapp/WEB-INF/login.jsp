@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <script src="js/jquery-1.12.3.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/common.js"></script>
     <style>
         #login-form {
             margin-top: 20px;
@@ -41,13 +42,12 @@
 </div>
 <script>
     $("#submit").click(function () {
-        var username = $("input[name='username']").val();
-        var password = $("input[name='password']").val();
-        if(!username){
+        var params = getInputValues($("#login-form"))
+        if(!params.username){
             $("#errorMsg").text("用户名不能为空").show();
             return false;
         }
-        if(!password){
+        if(!params.password){
             $("#errorMsg").text("密码不能为空").show();
             return false;
         }
@@ -55,7 +55,7 @@
             url: "login",
             type: "post",
             dataType: "json",
-            data: {username: username, password: password},
+            data: params,
             success: function (res) {
                 if (res.success) {
                     location.href = "index";
