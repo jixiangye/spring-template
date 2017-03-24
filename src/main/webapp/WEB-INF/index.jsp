@@ -16,9 +16,13 @@
     <script src="js/bootstrap.min.js"></script>
 </head>
 <body>
-<h1>欢迎<span id="username"></span>登录</h1><a href="logout">退出</a>
+<div class="page-header">
+    <div>欢迎<span id="username"></span>登录</div>
+    <div><a href="logout">退出</a></div>
+</div>
+
 <script>
-    $('input').placeholder();
+    $('input').placeholder();1
 
     $.ajax({
         url: "info",
