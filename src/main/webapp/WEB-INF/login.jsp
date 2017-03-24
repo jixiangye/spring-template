@@ -19,7 +19,7 @@
 </head>
 <body>
 <br class="xs-80">
-<div id="main" class="container-fluid main">
+<div id="main" class="container-fluid">
     <div id="login-form">
         <h3>登录</h3>
         <div class="form-group">

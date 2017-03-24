@@ -7,7 +7,7 @@ body {
     display: none;
 }
 
-.main {
+#main {
     position: relative;
     width: 90%;
     padding: 0;
@@ -16,7 +16,7 @@ body {
 }
 
 @media (min-width: 768px) {
-    .main {
+    #main {
         width: 450px;
     }
 }

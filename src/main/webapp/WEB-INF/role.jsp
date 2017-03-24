@@ -16,11 +16,16 @@
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/common.js"></script>
     <style>
+        #main {
+            width: 97%;
+            margin: 0 auto;
+        }
+
         #btn-add-role {
             margin: 10px;
         }
 
-        #errorMsg {
+        .errorMsg {
             color: red;
             display: none;
         }
@@ -50,11 +55,11 @@
     </div><!-- /.container-fluid -->
 </nav>
 
-<div class="table-responsive">
+<div id="main" class="table-responsive">
     <button type="button" class="btn btn-primary" id="btn-add-role" data-toggle="modal" data-target="#addRoleModal">
         新增角色
     </button>
-    <table id="role-list" class="table table-striped"></table>
+    <table id="role-list" class="table table-striped table-bordered"></table>
 </div>
 
 <!-- Modal -->
@@ -74,12 +79,36 @@
                     <input type="text" class="form-control" id="roleName" placeholder="角色名称" name="roleName">
                 </div>
                 <div class="form-group">
-                    <span id="errorMsg"></span>
+                    <span class="errorMsg"></span>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                 <button type="button" class="btn btn-primary" id="add-role-save">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="assignModal" tabindex="-1" role="dialog" aria-labelledby="assignModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="width:300px;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="assignModalLabel"><span id="role-code"></span>分配权限</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group permission-list">
+
+                </div>
+                <div class="form-group">
+                    <span class="errorMsg"></span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="assign-save">保存</button>
             </div>
         </div>
     </div>
@@ -106,7 +135,7 @@
                                     title: "操作",
                                     formatter: function (data, row) {
                                         return '<button type="button" data="' + row.roleCode + '" class="btn btn-danger delete">删除</button>&nbsp;&nbsp;' +
-                                                '<button type="button" data="' + row.roleCode + '" class="btn btn-primary assign">分配权限</button>';
+                                                '<button type="button" data="' + row.roleCode + '" class="btn btn-primary assign" data-toggle="modal" data-target="#assignModal">分配权限</button>';
                                     }
                                 }
                             ],
@@ -130,14 +159,55 @@
                     roleListInit();
                     $("#addRoleModal").find(".close").click();
                 } else {
-                    $("#errorMsg").text(res.errorMsg).show();
+                    $("#addRoleModal").find(".errorMsg").text(res.errorMsg).show();
                 }
             }
         });
     });
 
+    $("#role-list").on("click", ".assign", function () {
+        var _this = $(this);
+        var roleCode = _this.attr("data");
+        $.ajax({
+            url: "../permission/list",
+            type: "post",
+            dataType: "json",
+            success: function (res) {
+                if (res.success) {
+                    var html = "";
+                    for (var i = 0; i < res.data.length; i++) {
+                        html += '<div class="checkbox"><label>';
+                        html += '<input type="checkbox" name="permissionCode" value="' + res.data[i].permissionCode + '">';
+                        html += res.data[i].permissionName;
+                        html += '</label></div>';
+                    }
+                    $("#role-code").text(roleCode);
+                    $("#assignModal").find(".permission-list").html(html);
+                    $.ajax({
+                        url: "permission/list",
+                        type: "post",
+                        dataType: "json",
+                        data: {roleCode: roleCode},
+                        success: function (res) {
+                            if (res.success) {
+                                for (var i = 0; i < res.data.length; i++) {
+                                    $(".permission-list").find("input[value='" + res.data[i].permissionCode + "']").prop('checked', true)
+                                }
+                            } else {
+                                $("#assignModal").find(".errorMsg").text("查询权限失败").show();
+                            }
+                        }
+                    });
+                } else {
+                    $("#assignModal").find(".errorMsg").text("查询权限失败").show();
+                }
+            }
+        })
+
+    });
+
     $("#role-list").on("click", ".delete", function () {
-        var _this =  $(this);
+        var _this = $(this);
         $.confirm({
             msg: "确定删除角色？",
             ok: function () {
@@ -157,8 +227,7 @@
                 });
             }
         });
-
-    })
+    });
 
     $(document).ready(function () {
         roleListInit();

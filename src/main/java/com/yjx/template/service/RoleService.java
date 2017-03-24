@@ -1,5 +1,6 @@
 package com.yjx.template.service;
 
+import com.yjx.template.pojo.Permission;
 import com.yjx.template.pojo.Role;
 
 import java.util.List;
@@ -12,4 +13,8 @@ public interface RoleService {
     Role getByRoleCode(String roleCode);
 
     List<Role> listRoles();
+
+    List<Permission> listPermisionsByRole(String roleCode);
+
+    List<Permission> listAllPermissions();
 }

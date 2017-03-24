@@ -2,6 +2,8 @@ package com.yjx.template.dao;
 
 import com.yjx.template.pojo.Permission;
 
+import java.util.List;
+
 public interface PermissionMapper {
     int deleteByPrimaryKey(String permissionCode);
 
@@ -14,4 +16,6 @@ public interface PermissionMapper {
     int updateByPrimaryKeySelective(Permission record);
 
     int updateByPrimaryKey(Permission record);
+
+    List<Permission> listAllPermissions();
 }

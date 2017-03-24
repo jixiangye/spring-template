@@ -14,6 +14,11 @@
     from permission
     where permission_code = #{permissionCode,jdbcType=VARCHAR}
   </select>
+  <select id="listAllPermissions" resultType="com.yjx.template.pojo.Permission">
+    select
+    <include refid="Base_Column_List" />
+    from permission
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from permission
     where permission_code = #{permissionCode,jdbcType=VARCHAR}
