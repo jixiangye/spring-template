@@ -220,11 +220,32 @@
                         if (res.success) {
                             roleListInit();
                         } else {
-                            alert("删除失败");
+                            $.alert({msg: "删除失败"});
                         }
 
                     }
                 });
+            }
+        });
+    });
+
+    $("#assign-save").click(function () {
+        var params = $("#assignModal").values();
+        params['roleCode'] = $("#role-code").text();
+
+
+        $.ajax({
+            url: "permission/save",
+            type: "post",
+            dataType: "json",
+            data: JSON.stringify(params),
+            contentType:'application/json',
+            success: function (res) {
+                if (res.success) {
+                    $("#assignModal").find(".close").click();
+                } else {
+                    $.alert({msg: "分配权限失败"});
+                }
             }
         });
     });

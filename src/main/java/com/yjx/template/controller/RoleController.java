@@ -3,6 +3,7 @@ package com.yjx.template.controller;
 import com.yjx.template.base.FailResult;
 import com.yjx.template.base.Result;
 import com.yjx.template.base.SuccessResult;
+import com.yjx.template.pojo.AssignPermissionDTO;
 import com.yjx.template.pojo.Permission;
 import com.yjx.template.pojo.Role;
 import com.yjx.template.service.RoleService;
@@ -10,10 +11,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -79,5 +77,13 @@ public class RoleController {
     public Result listAllPermissions() {
         List<Permission> permissionList = roleService.listAllPermissions();
         return new SuccessResult(permissionList);
+    }
+
+    @RequestMapping(value = "role/permission/save", method = RequestMethod.POST)
+    @ResponseBody
+    @RequiresPermissions("role:permission")
+    public Result savePermissions(@RequestBody AssignPermissionDTO assignPermissionDTO) {
+        roleService.savePermissions(assignPermissionDTO);
+        return new SuccessResult(null);
     }
 }

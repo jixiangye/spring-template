@@ -3,17 +3,21 @@ package com.yjx.template.service;
 import com.yjx.template.dao.PermissionMapper;
 import com.yjx.template.dao.RoleMapper;
 import com.yjx.template.dao.RolePermissionsMapper;
+import com.yjx.template.pojo.AssignPermissionDTO;
 import com.yjx.template.pojo.Permission;
 import com.yjx.template.pojo.Role;
 import com.yjx.template.pojo.RolePermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class RoleServiceImpl implements RoleService{
+public class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleMapper roleMapper;
 
@@ -51,5 +55,22 @@ public class RoleServiceImpl implements RoleService{
 
     public List<Permission> listAllPermissions() {
         return permissionMapper.listAllPermissions();
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Throwable.class)
+    public void savePermissions(AssignPermissionDTO assignPermissionDTO) {
+        List<RolePermissions> permissionsByRole = rolePermissionsMapper.getPermissionsByRole(assignPermissionDTO.getRoleCode());
+        for (RolePermissions rolePermissions : permissionsByRole) {
+            rolePermissionsMapper.deleteByPrimaryKey(rolePermissions.getId());
+        }
+
+        List<String> permissionCodeList = assignPermissionDTO.getPermissionCodeList();
+        for (String s : permissionCodeList) {
+            RolePermissions record = new RolePermissions();
+            record.setRoleCode(assignPermissionDTO.getRoleCode());
+            record.setPermissionCode(s);
+            rolePermissionsMapper.insertSelective(record);
+        }
+
     }
 }

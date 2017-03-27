@@ -1,10 +1,20 @@
 jQuery.fn.extend({
     values: function () {
         var params = {};
-        var inputs = $(this).find("input");
+        var inputs = $(this).find("input[type='text'],input[type='password']");
         for (var i = 0; i < inputs.length; i++) {
             params[inputs[i].name] = inputs[i].value;
         }
+
+        var checkboxs = $(this).find("input[type='checkbox']");
+        for (var i = 0; i < checkboxs.length; i++) {
+            params[checkboxs[i].name] = params[checkboxs[i].name] || [];
+
+            if (checkboxs[i].checked) {
+                params[checkboxs[i].name].push(checkboxs[i].value);
+            }
+        }
+
         return params;
 
     },

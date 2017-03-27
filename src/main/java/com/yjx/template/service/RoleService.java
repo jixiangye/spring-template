@@ -1,5 +1,6 @@
 package com.yjx.template.service;
 
+import com.yjx.template.pojo.AssignPermissionDTO;
 import com.yjx.template.pojo.Permission;
 import com.yjx.template.pojo.Role;
 
@@ -17,4 +18,6 @@ public interface RoleService {
     List<Permission> listPermisionsByRole(String roleCode);
 
     List<Permission> listAllPermissions();
+
+    void savePermissions(AssignPermissionDTO assignPermissionDTO);
 }
