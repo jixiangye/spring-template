@@ -1,8 +1,13 @@
 package com.yjx.template.service;
 
 import com.yjx.template.base.BizException;
+import com.yjx.template.dao.RoleMapper;
 import com.yjx.template.dao.UserMapper;
+import com.yjx.template.dao.UserRolesMapper;
+import com.yjx.template.pojo.AssignRoleDTO;
+import com.yjx.template.pojo.Role;
 import com.yjx.template.pojo.User;
+import com.yjx.template.pojo.UserRoles;
 import org.apache.shiro.codec.Hex;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.slf4j.Logger;
@@ -13,7 +18,9 @@ import org.springframework.util.StringUtils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -21,6 +28,12 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private UserRolesMapper userRolesMapper;
+
+    @Autowired
+    private RoleMapper roleMapper;
 
     public int register(User user) {
         if (StringUtils.isEmpty(user.getUsername())) {
@@ -78,5 +91,32 @@ public class UserServiceImpl implements UserService {
         user.setPassword(password);
         user.setModifyTime(new Date());
         userMapper.updateByUsername(user);
+    }
+
+    public List<User> listUser() {
+        return userMapper.listUser();
+    }
+
+    public List<Role> userRoleList(String username) {
+        List<Role> roleList = new ArrayList<Role>();
+        List<UserRoles> rolesByUser = userRolesMapper.getRolesByUser(username);
+        for (UserRoles userRoles : rolesByUser) {
+            roleList.add(roleMapper.selectByPrimaryKey(userRoles.getRoleCode()));
+        }
+        return roleList;
+    }
+
+    public void saveUserRole(AssignRoleDTO assignRoleDTO) {
+        List<UserRoles> rolesByUser = userRolesMapper.getRolesByUser(assignRoleDTO.getUsername());
+        for (UserRoles userRoles : rolesByUser) {
+            userRolesMapper.deleteByPrimaryKey(userRoles.getId());
+        }
+        List<String> roleCodeList = assignRoleDTO.getRoleCodeList();
+        for (String s : roleCodeList) {
+            UserRoles record = new UserRoles();
+            record.setUsername(assignRoleDTO.getUsername());
+            record.setRoleCode(s);
+            userRolesMapper.insertSelective(record);
+        }
     }
 }

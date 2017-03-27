@@ -2,6 +2,7 @@ package com.yjx.template.controller;
 
 import com.yjx.template.base.FailResult;
 import com.yjx.template.base.Result;
+import com.yjx.template.base.SuccessResult;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,10 @@ public class LoginController {
     @ResponseBody
     public Result doLogin(HttpServletRequest req) {
         String failureClass = (String) req.getAttribute(FormAuthenticationFilter.DEFAULT_ERROR_KEY_ATTRIBUTE_NAME);
+        if (failureClass == null) {
+            return new SuccessResult(null);
+        }
+
         if (UnknownAccountException.class.getName().equalsIgnoreCase(failureClass)) {
             return new FailResult("该用户不存在");
         } else {

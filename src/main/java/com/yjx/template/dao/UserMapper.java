@@ -2,6 +2,8 @@ package com.yjx.template.dao;
 
 import com.yjx.template.pojo.User;
 
+import java.util.List;
+
 public interface UserMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -18,4 +20,6 @@ public interface UserMapper {
     User getByUsername(String username);
 
     int updateByUsername(User user);
+
+    List<User> listUser();
 }

@@ -1,5 +1,7 @@
 package com.yjx.template.pojo;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -20,8 +22,10 @@ public class User implements Serializable{
 
     private String mobile;
 
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date modifyTime;
 
     public Integer getId() {

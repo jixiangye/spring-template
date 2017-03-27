@@ -52,7 +52,6 @@ jQuery.extend({
         var _confirmModal = $(getAlertModal()).appendTo(_body);
         var modalTitle = _confirmModal.find('.modal-title');
         var modalBody = _confirmModal.find('.modal-body');
-        var modalFooter = _confirmModal.find('.modal-footer');
         modalTitle.html(options.title);
         modalBody.html(options.msg).css("text-align", "center");
         ;
@@ -73,7 +72,6 @@ jQuery.extend({
         var _confirmModal = $(getConfirmModal()).appendTo(_body);
         var modalTitle = _confirmModal.find('.modal-title');
         var modalBody = _confirmModal.find('.modal-body');
-        var modalFooter = _confirmModal.find('.modal-footer');
         modalTitle.html(options.title);
         modalBody.html(options.msg).css("text-align", "center");
         _confirmModal.find('.modal-dialog').css('width', options.width);
@@ -89,6 +87,19 @@ jQuery.extend({
             typeof options.ok == 'function' && options.ok();
         });
         _confirmModal.modal('show');
+    },
+    getUser: function () {
+        var user = {};
+        $.ajax({
+            url: "/info",
+            type: "post",
+            dataType: "json",
+            async: false,
+            success: function (res) {
+                user = res;
+            }
+        });
+        return user;
     }
 });
 
@@ -126,3 +137,12 @@ function getAlertModal() {
         '    </div>',
         '</div>'].join("");
 }
+
+$(document).ready(function () {
+    $('nav ul li').click(function(){
+        $(this).parent('ul').children('li').removeClass('active');
+        $(this).addClass('active');
+    });
+
+    $("span#username").text($.getUser().username);
+});
