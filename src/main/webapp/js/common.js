@@ -1,7 +1,7 @@
 jQuery.fn.extend({
     values: function () {
         var params = {};
-        var inputs = $(this).find("input[type='text'],input[type='password']");
+        var inputs = $(this).find("input[type='text'],input[type='password'],textarea");
         for (var i = 0; i < inputs.length; i++) {
             params[inputs[i].name] = inputs[i].value;
         }
