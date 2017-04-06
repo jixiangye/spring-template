@@ -1,7 +1,7 @@
 jQuery.fn.extend({
     values: function () {
         var params = {};
-        var inputs = $(this).find("input[type='text'],input[type='password'],textarea,select");
+        var inputs = $(this).find("input[type='text'],input[type='password'],input[type='hidden'],textarea,select");
         for (var i = 0; i < inputs.length; i++) {
             params[inputs[i].name] = inputs[i].value;
         }
@@ -139,7 +139,7 @@ function getAlertModal() {
 }
 
 $(document).ready(function () {
-    $('nav ul li').click(function(){
+    $('nav ul li').click(function () {
         $(this).parent('ul').children('li').removeClass('active');
         $(this).addClass('active');
     });
