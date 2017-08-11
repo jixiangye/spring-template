@@ -27,6 +27,7 @@ public class ForgetController {
 
     @RequestMapping(value = "forget", method = RequestMethod.GET)
     public String forget() {
+        System.out.println(3);
         return "forget";
     }
 
