@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class IndexController {
     @RequestMapping(value = "index", method = RequestMethod.GET)
     public String index() {
+        System.out.println(1);
         return "index";
     }
 
